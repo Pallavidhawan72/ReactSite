@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1 Add Skill
+  form(action='/admin/skills/add', method='POST')
+    .mb-3
+      label.form-label(for='name') Name
+      input.form-control(type='text', name='name', id='name', required)
+    .mb-3
+      label.form-label(for='level') Level
+      select.form-select(name='level', id='level', required)
+        option(value='') Select level
+        option(value='Beginner') Beginner
+        option(value='Intermediate') Intermediate
+        option(value='Advanced') Advanced
+    .mb-3
+      label.form-label(for='category') Category
+      input.form-control(type='text', name='category', id='category')
+    button.btn.btn-primary(type='submit') Add Skill
+    a.btn.btn-secondary.ms-2(href='/admin/skills') Cancel 

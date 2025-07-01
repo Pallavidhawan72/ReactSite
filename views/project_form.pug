@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 Add Project
+  form(action='/admin/projects/add', method='POST')
+    .mb-3
+      label.form-label(for='title') Title
+      input.form-control(type='text', name='title', id='title', required)
+    .mb-3
+      label.form-label(for='description') Description
+      textarea.form-control(name='description', id='description', required)
+    .mb-3
+      label.form-label(for='link') Link
+      input.form-control(type='url', name='link', id='link')
+    .mb-3
+      label.form-label(for='date') Date
+      input.form-control(type='date', name='date', id='date')
+    button.btn.btn-primary(type='submit') Add Project
+    a.btn.btn-secondary.ms-2(href='/admin/projects') Cancel 

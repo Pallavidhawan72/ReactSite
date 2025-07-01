@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1 Projects
+  a.btn.btn-success.mb-3(href='/admin/projects/add') Add Project
+  if projects.length
+    table.table.table-striped
+      thead
+        tr
+          th Title
+          th Description
+          th Link
+          th Date
+          th Actions
+      tbody
+        each project in projects
+          tr
+            td= project.title
+            td= project.description
+            td
+              if project.link
+                a(href=project.link, target='_blank') Link
+              else
+                | -
+            td= project.date.toDateString()
+            td
+              form(action=`/admin/projects/${project._id}/delete`, method='POST', style='display:inline')
+                button.btn.btn-danger.btn-sm(type='submit') Delete
+  else
+    p No projects found. 
