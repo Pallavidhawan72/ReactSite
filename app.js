@@ -14,10 +14,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log("MongoDB connected"))
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
 // Middleware
@@ -30,6 +28,11 @@ app.use(express.static(path.join(__dirname, "public")));
 // Routes
 app.use("/admin", adminRoutes);
 app.use("/api", apiRoutes);
+
+// Redirect root to /admin
+app.get("/", (req, res) => {
+  res.redirect("/admin");
+});
 
 // 404 handler
 app.use((req, res) => {
