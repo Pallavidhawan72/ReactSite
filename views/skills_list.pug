@@ -18,6 +18,7 @@ block content
             td= skill.level
             td= skill.category || '-'
             td
+              a.btn.btn-warning.btn-sm(href=`/admin/skills/${skill._id}/edit`, style='margin-right:6px;') Edit
               form(action=`/admin/skills/${skill._id}/delete`, method='POST', style='display:inline')
                 button.btn.btn-danger.btn-sm(type='submit') Delete
   else

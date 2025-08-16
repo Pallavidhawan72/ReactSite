@@ -1,19 +1,32 @@
 extends layout
 
 block content
-  h1 Add Project
-  form(action='/admin/projects/add', method='POST')
+  h1= project ? 'Edit Project' : 'Add Project'
+  form(action=project ? `/admin/projects/${project._id}/edit` : '/admin/projects/add', method='POST')
     .mb-3
       label.form-label(for='title') Title
-      input.form-control(type='text', name='title', id='title', required)
+      input.form-control(type='text', name='title', id='title', required, value=project ? project.title : '')
     .mb-3
       label.form-label(for='description') Description
-      textarea.form-control(name='description', id='description', required)
+      textarea.form-control(name='description', id='description', required)= project ? project.description : ''
     .mb-3
       label.form-label(for='link') Link
-      input.form-control(type='url', name='link', id='link')
+      input.form-control(type='url', name='link', id='link', value=project ? project.link : '')
     .mb-3
       label.form-label(for='date') Date
-      input.form-control(type='date', name='date', id='date')
-    button.btn.btn-primary(type='submit') Add Project
-    a.btn.btn-secondary.ms-2(href='/admin/projects') Cancel 
+      input.form-control(type='date', name='date', id='date', value=project && project.date ? project.date.toISOString().substring(0,10) : '')
+    .mb-3
+      label.form-label(for='skills') Skills/Tech Used
+      select.form-select(name='skills', id='skills', multiple)
+        if skills && skills.length
+          each skill in skills
+            option(value=skill._id, selected=project && project.skills && project.skills.includes(skill._id))= skill.name
+        else
+          option(disabled selected) No skills available
+      small.text-muted Select one or more skills (Ctrl+Click)
+    .mb-3
+      label.form-label(for='screenshots') Image/References URL(s)
+      textarea.form-control(name='screenshots', id='screenshots', rows='2', placeholder='Enter one URL per line or comma-separated')= project && project.screenshots && project.screenshots.length ? project.screenshots.join("\n") : ''
+      small.text-muted Enter one or more URLs (one per line or comma-separated)
+    button.btn.btn-primary(type='submit')= project ? 'Update Project' : 'Add Project'
+    a.btn.btn-secondary.ms-2(href='/admin/projects') Cancel

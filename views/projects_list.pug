@@ -7,14 +7,28 @@ block content
     table.table.table-striped
       thead
         tr
+          th Screenshot
           th Title
           th Description
           th Link
+          th Skills
           th Date
           th Actions
       tbody
         each project in projects
           tr
+            td
+              if project.screenshots && project.screenshots.length
+                div.d-flex.flex-wrap.gap-3.align-items-start
+                  each url in project.screenshots
+                    div.p-2.bg-light.rounded.shadow-sm(style='min-width:120px; max-width:220px; word-break:break-all;')
+                      if url.match(/\.(jpg|jpeg|png|gif|webp)$/i)
+                        a(href=url, target='_blank', title='Open image in new tab')
+                          img(src=url, alt='Screenshot', style='max-width:100px;max-height:60px; display:block; margin:0 auto 6px auto; border-radius:4px; box-shadow:0 1px 4px #bbb;')
+                      a(href=url, target='_blank', class='small text-primary text-break', style='display:block; text-decoration:underline;')
+                        | #{url.length > 40 ? url.slice(0,40) + '...' : url}
+              else
+                span.text-muted.fst-italic -
             td= project.title
             td= project.description
             td
@@ -22,8 +36,20 @@ block content
                 a(href=project.link, target='_blank') Link
               else
                 | -
-            td= project.date.toDateString()
             td
+              if project.skills && project.skills.length
+                ul.mb-0.ps-3
+                  each skill in project.skills
+                    li= skill.name
+              else
+                | -
+            td
+              if project.date
+                = new Date(project.date).toDateString()
+              else
+                span.text-muted.fst-italic -
+            td
+              a.btn.btn-warning.btn-sm(href=`/admin/projects/${project._id}/edit`, style='margin-right:6px;') Edit
               form(action=`/admin/projects/${project._id}/delete`, method='POST', style='display:inline')
                 button.btn.btn-danger.btn-sm(type='submit') Delete
   else
