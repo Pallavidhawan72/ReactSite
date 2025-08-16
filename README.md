@@ -1,14 +1,14 @@
 # Assignment 1: Project & Skills Admin Dashboard
 # Project Setup & Running Instructions
 ## Backend (Admin/API - Express)
-- The backend admin dashboard and API run on **port 3000** by default (see your `app.js`).
+- The backend admin dashboard and API run on **port 3000** by default
 - Example: http://localhost:3000/admin/skills
 - To install dependencies for the backend, run:
    ```bash
    npm install in the project root folder.
 
 ## Frontend (React App)
-- The frontend React app runs on **port 3001** by default (see your `client/package.json`).
+- The frontend React app runs on **port 3001** by default.
 - Example: http://localhost:3001/#home
 - To install dependencies for the frontend, run:
    cd client
